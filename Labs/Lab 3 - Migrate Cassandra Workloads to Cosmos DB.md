@@ -331,7 +331,7 @@ lab:
 
    - 接触点
    - 端口
-   - Username
+   - 用户名
    - 主密码
 
 3. 返回 Cassandra 服务器，然后启动 Cassandra Query Shell。这一次，连接到你的 Cosmos DB 帐户。请将 **cqlsh** 命令的参数替换为刚刚记下的值：
