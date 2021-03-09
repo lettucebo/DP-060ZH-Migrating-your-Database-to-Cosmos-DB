@@ -1,34 +1,29 @@
-﻿---
-lab:
-    title: '将 MongDB 工作负荷迁移到 Cosmos DB'
-    module: '模块 2:将 MongoDB 工作负荷迁移到 Cosmos DB'
----
+﻿
+# 实验室 2：将 MongDB 工作负载迁移到 Cosmos DB
+<!-- TOC -->
 
-- [实验 2：将 MongDB 工作负荷迁移到 Cosmos DB](#lab-2-migrate-mongdb-workloads-to-cosmos-db)
-  - [练习 1：设置](#exercise-1-setup)
-    - [任务 1：创建资源组和虚拟网络](#task-1-create-a-resource-group-and-virtual-network)
-    - [任务 2：创建一个 MongoDB 数据库服务器](#task-2-create-a-mongodb-database-server)
-    - [任务 3：配置 MongoDB 数据库](#task-3-configure-the-mongodb-database)
-  - [练习 2：填充和查询 MongoDB 数据库](#exercise-2-populate-and-query-the-mongodb-database)
-    - [任务 1：生成并运行应用以填充 MongoDB 数据库](#task-1-build-and-run-an-app-to-populate-the-mongodb-database)
-    - [任务 2：生成并运行其他应用以查询 MongoDB 数据库](#task-2-build-and-run-another-app-to-query-the-mongodb-database)
-  - [练习 3：将 MongoDB 数据库迁移到 Cosmos DB](#exercise-3-migrate-the-mongodb-database-to-cosmos-db)
-    - [任务 1：创建 Cosmos 帐户和数据库](#task-1-create-a-cosmos-account-and-database)
-    - [任务 2：创建数据库迁移服务](#task-2-create-the-database-migration-service)
-    - [任务 3：创建并运行新的迁移项目](#task-3-create-and-run-a-new-migration-project)
-    - [任务 4：验证迁移是否成功](#task-4-verify-that-migration-was-successful)
-  - [练习 4：重新配置并运行现有应用程序以使用 Cosmos DB](#exercise-4-reconfigure-and-run-existing-applications-to-use-cosmos-db)
-    - [任务 1：启用 MongoDB 聚合支持](#task-1-enable-mongodb-aggregation-support)
-    - [任务 2：重新配置 DeviceDataQuery 应用程序](#task-2-reconfigure-the-devicedataquery-application)
-  - [练习 5：知识总结](#exercise-5-clean-up)
+- [实验室 2：将 MongDB 工作负载迁移到 Cosmos DB](#lab-2-migrate-mongdb-workloads-to-cosmos-db)
+    - [练习 1：设置](#exercise-1-setup)
+        - [任务 1：创建资源组和虚拟网络](#task-1-create-a-resource-group-and-virtual-network)
+        - [任务 2：创建一个 MongoDB 数据库服务器](#task-2-create-a-mongodb-database-server)
+        - [任务 3：配置 MongoDB 数据库](#task-3-configure-the-mongodb-database)
+    - [练习 2：填充和查询 MongoDB 数据库](#exercise-2-populate-and-query-the-mongodb-database)
+        - [任务 1：生成并运行应用以填充 MongoDB 数据库](#task-1-build-and-run-an-app-to-populate-the-mongodb-database)
+        - [任务 2：生成并运行其他应用以查询 MongoDB 数据库](#task-2-build-and-run-another-app-to-query-the-mongodb-database)
+    - [练习 3：将 MongoDB 数据库迁移到 Cosmos DB](#exercise-3-migrate-the-mongodb-database-to-cosmos-db)
+        - [任务 1：创建 Cosmos 帐户和数据库](#task-1-create-a-cosmos-account-and-database)
+        - [任务 2：创建数据库迁移服务](#task-2-create-the-database-migration-service)
+        - [任务 3：创建并运行新的迁移项目](#task-3-create-and-run-a-new-migration-project)
+        - [任务 4：验证迁移是否成功](#task-4-verify-that-migration-was-successful)
+    - [练习 4：重新配置并运行现有应用程序以使用 Cosmos DB](#exercise-4-reconfigure-and-run-existing-applications-to-use-cosmos-db)
+    - [练习 5：知识总结](#exercise-5-clean-up)
 
-# 实验 2：将 MongDB 工作负荷迁移到 Cosmos DB
+<!-- /TOC -->
+在本实验室中，你将使用现有 MongoDB 数据库并将其迁移到 Cosmos DB。你将使用 Azure 数据库迁移服务。你还将了解如何将使用 MongoDB 数据库的现有应用程序重新配置为连接到 Cosmos DB 数据库。
 
-在本实验中，你将使用现有 MongoDB 数据库并将其迁移到 Cosmos DB。你将使用 Azure 数据库迁移服务。你还将了解如何将使用 MongoDB 数据库的现有应用程序重新配置为连接到 Cosmos DB 数据库。
+本实验室以从一系列 IoT 设备中捕获温度数据的示例系统为基础。温度和时间戳一起记录在 MongoDB 数据库中。每个设备都有唯一的 ID。你将运行一个模拟这些设备并将数据存储在数据库中的 MongoDB 应用程序。你还将使用支持用户查询每个设备的统计信息的第二个应用程序。将数据库从 MongoDB 迁移到 Cosmos DB 之后，你将这两个应用程序配置为连接到 Cosmos DB，并验证其是否仍正常运行。
 
-本实验以从一系列 IoT 设备中捕获温度数据的示例系统为基础。温度和时间戳一起记录在 MongoDB 数据库中。每个设备都有唯一的 ID。你将运行一个模拟这些设备并将数据存储在数据库中的 MongoDB 应用程序。你还将使用支持用户查询每个设备的统计信息的第二个应用程序。将数据库从 MongoDB 迁移到 Cosmos DB 之后，你将这两个应用程序配置为连接到 Cosmos DB，并验证其是否仍正常运行。
-
-本实验使用 Azure Cloud Shell 和 Azure 门户运行。
+本实验室使用 Azure Cloud Shell 和 Azure 门户运行。
 
 ## 练习 1：设置
 
@@ -38,7 +33,7 @@ lab:
 
 1. 在 Internet 浏览器中，导航到 https://portal.azure.com 并登录。
 2. 在 Azure 门户中，单击 **“资源组”**，再单击 **“+添加”**。
-3. 在创建资源组页面，输入以下详细信息，然后单击 **“查看 + 创建”**：
+3. 在**创建资源组页面**，输入以下详细信息，然后单击 **“查看 + 创建”**：
 
     | 属性  | 值  |
     |---|---|
@@ -47,32 +42,35 @@ lab:
     | 区域 | 选择离你最近的位置 |
 
 4. 单击 **“创建”**，然后等待创建资源组。
-5. 在 Azure 门户的左侧窗格中，单击 **“+ 创建资源”**。
+5. 在 Azure 门户的侧边栏菜单中，单击 **“+ 创建资源”**。
 6. 在 **“新建”** 页面的 **“搜索市场”** 框中，键入 **“虚拟网络”**，然后按 Enter。
 7. 在 **“虚拟网络”** 页面上，单击 **“创建”**。
-8. 在 **“创建虚拟网络”** 页面，输入以下详细信息，然后单击 **“创建”**：
+8. 在 **“创建虚拟网络”** 页面，输入以下详细信息，然后单击 **“下一步：IP 地址**：
 
     | 属性  | 值  |
     |---|---|
-    | 名称 | databasevnet |
-    | 地址空间 | 10.0.0.0/24 |
     | 订阅 | *\<your-subscription\>* |
     | 资源组 | mongodbrg |
+    | 名称 | databasevnet |
     | 区域 | 选择为资源组指定的相同位置 |
-    | 子网名称 | 默认 |
-    | 子网地址范围 | 10.0.0.0/28 |
-    | DDoS 保护 | 基本 |
-    | 服务终结点 | 已禁用 |
-    | 防火墙 | 已禁用 |
+    
+9. 在 **“IP 地址”** 页面，将 **“IPv4 地址空间”** 设置为 **“10.0.0.0/24”**，然后单击 **“+ 添加子网”**。
 
-9. 请先等待虚拟网络创建，然后再继续操作。
+10. 在 **“添加子网”** 窗格中，将 **“子网名称”** 设置为 **“默认”**，将 **“子网地址范围”** 设置为 **“10.0.0.0/28”**，然后单击 **“添加”**。
+
+11. 在 **“IP 地址”** 页面上，选择 **“默认”** 子网，然后单击 **“下一步：安全性”**。
+
+12. 在 **“安全性”** 页面上，验证 **“DDoS 保护”** 是否设置为 **“基本”**，**“防火墙”** 是否设置为 **“禁用”**。单击 **“查看 * 创建”**。
+
+13. 在 **“创建虚拟网络”** 页面上，单击 **“创建”**。请先等待虚拟网络创建，然后再继续操作。
 
 ### 任务 2：创建一个 MongoDB 数据库服务器
 
-1. 在 Azure 门户的左侧窗格中，单击 **“+ 创建资源”**。
-2. 在 **“搜索市场”** 框中，键入 **“由 Bitnami 认证的 MongoDB”**，然后按 Enter。
-3. 在 **“由 Bitnami 认证的 MongoDB”** 页面上，单击 **“创建”**。
-4. 在 **“创建虚拟机”** 页面上，输入以下详细信息，然后单击 **“下一步：磁盘 \>”**。
+1. 在 Azure 门户的侧边栏菜单中，单击 **“+ 创建资源”**。
+2. 在 **“搜索市场”** 框中，键入 **“MongoDB Community”**，然后按 Enter。
+3. 在 **“市场”** 页面上，单击 **“Ubuntu 中的 MongoDB 社区”**。
+4. 在 **“Ubuntu 中的 MongoDB 社区”** 页面上，单击 **“创建”**。
+5. 在 **“创建虚拟机”** 页面上，输入以下详细信息，然后单击 **“下一步：磁盘 \>”**。
 
     | 属性  | 值  |
     |---|---|
@@ -81,15 +79,16 @@ lab:
     | 虚拟机名称 | mongodbserver | 
     | 区域 | 选择为资源组指定的相同位置 |
     | 可用性选项 | 无需基础结构冗余 |
-    | 图像 | 由 Bitnami 认证的 MongoDB |
-    | 大小 | 标准 A1 v2 |
+    | 映像 | Ubuntu 中的 MongoDB Community 4.0 |
+    | Azure Spot 实例 | 否 |
+    | 大小 | 标准 A1_v2 |
     | 身份验证类型 | 密码 |
-    | Username | azureuser |
+    | 用户名 | azureuser |
     | 密码 | Pa55w.rdPa55w.rd |
     | 确认密码 | Pa55w.rdPa55w.rd |
 
-5. 在 **“磁盘”** 页面上，接受默认设置，然后单击 **“下一步：网络 \>”**。
-6. 在 **“网络”** 页面上，输入以下详细信息，然后单击 **“下一步：管理 \>”**。
+6. 在 **“磁盘”** 页面上，接受默认设置，然后单击 **“下一步：网络 \>”**。
+7. 在 **“网络”** 页面上，输入以下详细信息，然后单击 **“下一步：管理 \>”**。
 
     | 属性  | 值  |
     |---|---|
@@ -97,20 +96,18 @@ lab:
     | 子网 | 默认 (10.0.0.0/28) |
     | 公共 IP | （新）mongodbserver-ip |
     | NIC 网络安全组 | 高级 |
-    ！配置网络安全组 | （新）mongodbserver-nsg |
+    ! 配置网络安全组 | （新）mongodbserver-nsg |
     | 加速网络 | 关闭 |
     | 负载均衡 | 否 |
 
-7. 在 **“管理”** 页面上，接受默认设置，然后单击 **“下一步：高级 \>”**。
-8. 在 **“高级”** 页面上，接受默认设置，然后单击 **“下一步：标记 \>”**。
-9. 在 **“标记”** 页面上，接受默认设置，然后单击 **“下一步：查看 + 创建 \>”**。
-10. 在验证页面上，单击 **“创建”**。
-11. 请先等待虚拟机部署，然后再继续操作。
-12. 在 Azure 门户的左侧窗格中，单击 **“所有资源”**。
-13. 在 **“所有资源”** 页面上，单击 **“mongodbserver-nsg”**。
-14. 在 **“mongodbserver-nsg”** 页面的 **“设置”** 下，单击 **“入站安全规则”**。
-15. 在 **“mongodbserver-nsg - 入站安全规则”** 页面上，单击 **“+ 添加”**。
-16. 在 **“添加入站安全规则”** 窗格中，输入以下详细信息，然后单击 **“添加”**：
+8. 在 **“管理”** 页面上，接受默认设置，然后单击 **“查看 + 创建”**。
+9. 在验证页面上，单击 **“创建”**。
+10. 请先等待虚拟机部署，然后再继续操作。
+11. 在 Azure 门户的侧边栏菜单中，单击 **“所有资源”**。
+12. 在 **“所有资源”** 页面上，单击 **“mongodbserver-nsg”**。
+13. 在 **“mongodbserver-nsg”** 页面的 **“设置”** 下，单击 **“入站安全规则”**。
+14. 在 **“mongodbserver-nsg - 入站安全规则”** 页面上，单击 **“+ 添加”**。
+15. 在 **“添加入站安全规则”** 窗格中，输入以下详细信息，然后单击 **“添加”**：
 
     | 属性  | 值  |
     |---|---|
@@ -120,13 +117,15 @@ lab:
     | 目标端口范围 | 27017 |
     | 协议 | 任何 |
     | 操作 | 允许 |
-    | 优先级 | 1020 |
+    | 优先级 | 1030 |
     | 名称 | Mongodb-port |
-    | 说明 | 客户端用于连接到 MongoDB 的端口 |
+    | 描述 | 客户端用于连接到 MongoDB 的端口 |
 
 ### 任务 3：配置 MongoDB 数据库
 
-1. 在 Azure 门户的左侧窗格中，单击 **“所有资源”**。
+默认情况下，Mongo DB 实例配置为无需进行身份验证即可运行。在本任务中，你将启用身份验证并创建必需的用户帐户来执行迁移。你还将添加一个帐户，供测试应用程序查询数据库。
+
+1. 在 Azure 门户的侧边栏菜单中，单击 **“所有资源”**。
 2. 在 **“所有资源”** 页面上，单击 **“mongodbserver-ip”**。
 3. 在 **“mongodbserver-ip”** 页面上，记下 **“IP 地址”**。
 4. 在 Azure 门户顶部的工具栏中，单击 **“Cloud Shell”**。
@@ -140,19 +139,50 @@ lab:
 
 8. 在提示符下，键入 **“是”** 以继续连接。
 9. 输入密码 **“Pa55w.rdPa55w.rd”**
-10. 键入以下命令，并记下系统显示的根密码：
+10. 停止 MongoDB 服务：
 
     ```bash
-    cat bitnami_credentials
+    sudo service mongod stop
     ```
 
-11. 运行以下命令以连接到 MongoDB 数据库。请将 *“\<password\>”* 替换为上一步骤中显示的根密码。忽略关于使用 XFS 文件系统的警告：
+11. 以 **mongodb** 用户身份启动 bash shell：
 
     ```bash
-    mongo -u root -p <password>
+    sudo -u mongodb bash
     ```
 
-12. 在 **>** 提示符下，运行以下命令。这些命令为名为 **“DeviceData”** 的数据库创建了一个名为 **“deviceadmin”** 的新用户，其密码为 **“Pa55w.rd”**。运行 `db.shutdownserver();` 命令后，你将收到一些错误，你可以将其忽略：
+12. 以 **mongodb** 用户身份在本地重启 MongoDB 服务。
+
+    ```bash
+    mongod --dbpath /data/mongo &
+    ```
+
+    服务重启时，控制台上会显示大量消息。按 Enter 显示 bash 命令提示符。
+
+13. 运行以下命令以连接到 MongoDB 服务：
+
+    ```bash
+    mongo
+    ```
+
+14. 在 **“>”** 提示符下，运行以下命令****。这些命令会创建名为 **administartor** 的新用户，该用户可管理和监视数据库服务器：
+
+    ```mongosh
+    use admin
+    db.createUser(
+        {
+            user: "administrator",
+            pwd: "Pa55w.rd",
+            roles: [
+                { role: "userAdminAnyDatabase", db: "admin" },
+                { role: "clusterMonitor", db:"admin" },
+                "readWriteAnyDatabase"
+            ]
+        }
+    )
+    ```
+
+15. 运行以下命令，为名为 **DeviceData** 的数据库创建另一个名为 **deviceadmin** 的用户。运行 `db.shutdownserver();` 命令后，你将收到一些错误，这些错误可以忽略：
 
     ```mongosh
     use DeviceData;
@@ -168,25 +198,31 @@ lab:
     exit;
     ```
 
-13. 运行以下命令，重启 mongodb 服务。验证服务是否重启且没有出现任何错误消息，并且是否正在侦听端口 27017：
+16. 在 bash 提示符处，关闭以 **mongodb** 用户身份运行的 bash shell：
 
     ```bash
-    sudo /opt/bitnami/ctlscript.sh start
+    exit
     ```
 
-14. 运行以下命令，以验证你现在是否可以以 deviceadmin 用户身份登录 mongodb：
+17. 运行以下命令，重启 mongodb 服务。验证服务是否重启且没有出现任何错误消息，并且是否正在侦听端口 27017：
+
+    ```bash
+    sudo service mongod start
+    ```
+
+18. 运行以下命令，以验证你现在是否能够以 deviceadmin 用户身份登录 mongodb：
 
     ```bash
     mongo -u "deviceadmin" -p "Pa55w.rd" --authenticationDatabase DeviceData
     ```
 
-15. 在 **“>”** 提示符下，运行以下命令以退出 mongo shell：
+19. 在 **“>”** 提示符下，运行以下命令以退出 mongo shell：
 
     ```mongosh
     exit;
     ```
 
-16. 在 **“bitnami@mongodbserver”** 提示符下，键入以下命令以断开与 MongoDB 服务器的连接并返回到 Cloud Shell：
+20. 在 bash 提示符下，运行以下命令以断开与 MongoDB 服务器的连接并返回到 Cloud Shell：
 
     ```bash
     exit
@@ -216,9 +252,9 @@ lab:
     code TemperatureDevice.cs
     ```
 
-    此文件中的代码包含一个名为 **“TemperatureDevice”** 的类，它模拟温度设备捕获数据并将数据保存在 MongoDB 数据库中。该类使用适用于 .NET Framework 的 MongoDB 库。**“TemperatureDevice”** 构造函数使用存储在应用程序配置文件中的设置连接到数据库。**“RecordTemperatures”** 方法生成读数并将其写入数据库。
+    此文件中的代码包含一个名为 **“TemperatureDevice”** 的类，它模拟温度设备捕获数据并将数据保存在 MongoDB 数据库中。该类使用适用于 .NET Framework 的 MongoDB 库。 **“TemperatureDevice”** 构造函数使用存储在应用程序配置文件中的设置连接到数据库。 **“RecordTemperatures”** 方法生成读数并将其写入数据库。
 
-4. 关闭代码编辑器，然后打开 **“ThermometerReading.cs”文件**：
+4. 关闭代码编辑器，然后打开 **“ThermometerReading.cs”** 文件：
 
    ```bash
    code ThermometerReading.cs
@@ -231,7 +267,7 @@ lab:
     - 设备记录的温度
     - 记录温度时的日期和时间。
   
-5. 关闭代码编辑器，然后打开 **“App.config”文件**：
+5. 关闭代码编辑器，然后打开 **“App.config”** 文件：
 
     ```bash
     code App.config
@@ -301,7 +337,7 @@ lab:
 ### 任务 1：创建 Cosmos 帐户和数据库
 
 1. 返回 Azure 门户。
-2. 在左侧窗格中，单击 **“+ 创建资源”**。
+2. 在侧边栏菜单中，单击 **“+ 创建资源”**。
 3. 在 **“新建”** 页面的 **“搜索市场”** 框中，键入 **“Azure Cosmos DB”**，然后按 Enter。
 4. 在 **“Azure Cosmos DB”** 页面上，单击 **“创建”**。
 5. 在 **“创建 Azure Cosmos DB 帐户”** 页面上，输入以下设置，然后单击 **“查看 + 创建”**：
@@ -311,17 +347,16 @@ lab:
     | 订阅 | 选择你的订阅 |
     | 资源组 | mongodbrg |
     | 帐户名 | mongodb*nnn*，其中 *“nnn”* 表示你选择的随机编号 |
-    | API | ( ) 适用于 MongoDB API 的 Azure Cosmos DB。 |
+    | API | 适用于 MongoDB API 的 Azure Cosmos DB |
     | 位置 | 指定用于 MongoDB 服务器和虚拟网络的相同位置 |
     | 异地冗余 | 禁用 |
     | 多区域写入 | 禁用 |
 
 6. 在“验证”页面上，单击 **“创建”**，然后等待部署 Cosmos DB 帐户。
-7. 在左侧窗格中，单击 **“Azure Cosmos DB”**。
-8. 在 **“Azure Cosmos DB”** 页面上，单击 Cosmos DB 帐户 (mongodbnnn)。
-9. 在 **“mongodb*nnn”*** 页面上，单击 **“数据资源管理器”**。
-10. 在 **“数据资源管理器”** 窗格中，单击 **“新建集合”**。
-11. 在 **“添加集合”** 窗格中，指定以下设置，然后单击 **“确定”**：
+7. 在 Azure 门户的侧边栏菜单中，单击 **“所有资源”**，然后单击新建的 Cosmos DB 帐户（**mongodb*nnn***）。
+8. 在 **“mongodb*nnn”*** 页面上，单击 **“数据资源管理器”**。
+9. 在 **“数据资源管理器”** 窗格中，单击 **“新建集合”**。
+10. 在 **“添加集合”** 窗格中，指定以下设置，然后单击 **“确定”**：
 
     | 属性  | 值  |
     |---|---|
@@ -329,35 +364,39 @@ lab:
     | 预配数据库吞吐量 | 已选择 |
     | 吞吐量 | 1000 |
     | 集合 ID | 温度 |
-    | 共享密钥 | deviceID |
+    | 存储容量 | 无限制 |
+    | 分片键 | deviceID |
+    | 我的分片键超过 100 个字节 | 取消选中 |
 
 ### 任务 2：创建数据库迁移服务
 
-1. 在左侧窗格中，单击 **“所有服务”**。
-2. 在 **“所有服务”** 页面上，单击 **“订阅”**。
+1. 在 Azure 门户的侧边栏菜单中，单击 **“所有服务”**。
+2. 在 **“所有服务”** 搜索框中，键入 **“Subscriptions”**，然后按 **Enter**。
 3. 在 **“订阅”** 页面上，单击你的订阅。
 4. 在订阅页面上的 **“设置”** 下，单击 **“资源提供程序”**。
 5. 在 **“按名称筛选”** 框中，键入 **“DataMigration”**，然后单击 **“Microsoft.DataMigration”**。
 6. 请单击 **“注册表”**，然后等待 **“状态”** 更改为 **“已注册”**。可能需要单击 **“刷新”** 才能查看状态是否更改。
-7. 在左侧窗格中，单击 **“+ 创建资源”**。
+7. 在 Azure 门户的侧边栏菜单中，单击 **“+ 创建资源”**。
 8. 在 **“新建”** 页面的 **“搜索市场”** 框中，键入 **“Azure 数据库迁移服务”**，然后按 Enter。
 9. 在 **“Azure 数据库迁移服务”** 页面上，单击 **“创建”**。
-10. 在 **“创建迁移服务”** 页面上，输入以下设置，然后单击 **“创建”**：
+10. 在 **“创建迁移服务”** 页面上，输入以下设置，然后单击 **“下一步：网络**：
 
     | 属性  | 值  |
     |---|---|
-    | 服务名称 | MongoDBMigration |
     | 订阅 | 选择你的订阅 |
-    | 选择资源组 | mongodbrg |
-    | 位置 | 选择之前使用的相同位置 |
-    | 虚拟网络 | 单击 **“选择或创建虚拟网络”**，选择 **“databasevnet/默认”**，然后单击 **“确定”** |
+    | 资源组 | mongodbrg |
+    | 服务名称 | MongoDBMigration |
+    | 位置 | 选择你以前使用的同一位置 |
+    | 服务模式 | Azure |
     | 定价层 | 标准：1 个 vCore |
 
-11. 请先等待服务部署，然后再继续操作。此操作将花费几分钟时间。
+
+11. 在 **“网络”** 页面上，选择 **“databasevnet/default”**，**“查看 + 创建”**
+12. 单击 **“创建”**，等待服务部署完毕，然后再继续操作。此操作将花费几分钟时间。
 
 ### 任务 3：创建并运行新的迁移项目
 
-1. 在左侧窗格中，单击 **“资源组”**。
+1. 在 Azure 门户的侧边栏菜单中，单击 **“资源组”**。
 2. 在 **“资源组”** 窗口中，单击 **“mongodbrg”**。
 3. 在 **“mongodbrg”** 窗口中，单击 **“MongoDBMigration”**。
 4. 在 **“MongoDBMigration”** 页面上，单击 **“+ 新建迁移项目”**。
@@ -365,7 +404,7 @@ lab:
 
     | 属性  | 值  |
     |---|---|
-    | 项目名称 | MigrateTemperatureData |
+    | 项目名 | MigrateTemperatureData |
     | 源服务器类型 | MongoDB |
     | 目标服务器类型 | Cosmos DB (MongoDB API) |
     | 选择活动类型 | 离线数据迁移 |
@@ -376,9 +415,11 @@ lab:
     |---|---|
     | 模式 | 标准模式 |
     | 源服务器名称 | 指定之前记录的 **“mongodbserver-ip”** IP 地址的值 |
-    | Username | 根 |
-    | 密码 | 输入之前记下的 mongodbserver VM 上的根用户的密码（来自 bitnami_credentials 文件） |
+    | 服务器端口 | 27017 |
+    | 用户名 | administrator |
+    | 密码 | Pa55w.rd) |
     | 需要 SSL | 留空 |
+    | 我的服务器已启用 TLS 1.2 | select |
 
 7. 在 **“迁移详细信息”** 页面上，输入以下详细信息，然后单击 **“保存”**：
 
@@ -405,20 +446,20 @@ lab:
     | 名称 | 温度 |
     | 目标集合 | 温度 |
     | 吞吐量（RU/秒） | 1000 |
-    | 共享密钥 | deviceID |
+    | 分片键 | deviceID |
     | 唯一 | 留空 |
 
-10. 在 **“迁移摘要”** 页面上的 **“活动名称”** 字段，输入 **“mongodb-migration”**，选择 **“在初始数据复制期间提升 RU”**，然后单击 **“运行迁移”**。
-11. 在 **“mongodb-migration”** 页面上，每隔 30 秒单击一次 **“刷新”**，直到迁移完成。注意迁移的文档数。
+10. 在 **“迁移摘要”** 页面上的 **“活动名称”** 字段，输入 **“mongodb-migration”**，选择 **“在迁移期间提升 RU”**，然后单击 **“运行迁移”**。
+11. 在 **“mongodb-migration”** 页面上，每隔 30 秒单击一次 **“刷新”**，直到迁移完成。注意已处理的文档数。
 
 ### 任务 4：验证迁移是否成功
 
-1. 在左侧窗格中，单击 **“Azure Cosmos DB”**。
-2. 在 **“Azure Cosmos DB”** 页面上，单击 **“mongodbnnn”**。
-3. 在 **“mongodbnnn”** 页面上，单击 **“数据资源管理器”**。
-4. 在 **“数据资源管理器”** 窗格中，展开 **“温度”** 数据库，然后单击 **“文档”**。
-5. 在 **“文档”** 窗格中，滚动浏览文档列表。你应看到每个文档的文档 ID **(_id)** 和共享密钥 **(/deviceID)**。
-6. 单击任意文档。你应看到系统显示的该文档的详细信息。一个典型的文档如下所示：
+1. 在 Azure 门户的侧边栏菜单中，单击 **“所有资源”**。
+2. 在 **“所有资源”** 页面上，单击 **“mongodb*nnn”***。
+3. 在“mongodb*nnn”*** 页面上，单击 **“数据资源管理器”**。
+4. 在 **“数据资源管理器”** 窗格中，依次展开 **“DeviceData”** 数据库、**“温度”** 集合，然后单击 **“文档”**。
+5. 在 **“文档”** 窗格中，滚动浏览文档列表。你应看到每个文档的文档 ID (**_id**) 和共享密钥 (**/deviceID**)。
+6. 单击任意文档。你应看到系统显示的该文档的详细信息。常见文档如下所示：
 
     ```JSON
     {
@@ -450,18 +491,11 @@ lab:
 
 最后一步是重新配置现有 MongoDB 应用程序以连接到 Cosmos DB，并验证它们是否照常\运行。此过程要求修改应用程序连接数据库的方式，但是应用程序的逻辑应保持不变。
 
-### 任务 1：启用 MongoDB 聚合支持
-
-1. 在 **“mongodbnnn”** 窗格中的 **“设置”** 下，单击 **“预览功能”**。
-2. 在 **“聚合管道”** 旁边，单击 **“启用”**。等待启用聚合管道。此功能为 Cosmos DB 数据库增加了对 MongoDB 聚合和分组操作的支持。可能需要几分钟时间，聚合管道才可用。要查看功能的最新状态，请刷新浏览器窗口。
-
-### 任务 2：重新配置 DeviceDataQuery 应用程序
-
 1. 在 **“mongodb*nnn”*** 窗格中的 **“设置”** 下，单击 **“连接字符串”**。
 2. 在 **“mongodb*nnn* 连接字符串”** 页面上，记下以下设置：
 
     - 主机
-    - Username
+    - 用户名
     - 主密码
   
 3. 返回 Cloud Shell 窗口（如果会话超时，请重新连接），然后移至 **“migration-workshop-apps/MongoDeviceDataCapture/DeviceDataQuery”** 文件夹：
@@ -481,9 +515,9 @@ lab:
 
     | 设置  | 值  |
     |---|---|
-    | 地址 | **“mongodb*nnn* 连接字符串”** 页面中的主机 |
-    | Username | **“mongodb*nnn* 连接字符串”** 页面中的 Username |
-    | 密码 | **“Mongodb*nnn* 连接字符串”** 页面中的主密码 |
+    | 地址 | **“mongodb*nnn* 连接字符串”** 页面中的**主机** |
+    | 用户名 | **“mongodb*nnn* 连接字符串”** 页面中的 **Username** |
+    | 密码 | **“mongodb*nnn* 连接字符串”** 页面中的**主密码** |
 
     完成的文件应如下所示：
 
@@ -495,7 +529,7 @@ lab:
             <add key="Collection" value="Temperatures" />
 
             <!-- Settings for MongoDB -->
-            <!--add key="Address" value="168.63.99.236" />
+            <!--add key="Address" value="nn.nn.nn.nn" />
             <add key="Port" value="27017" />
             <add key="Username" value="deviceadmin" />
             <add key="Password" value="Pa55w.rd" /-->
@@ -519,7 +553,7 @@ lab:
     code Program.cs
     ```
 
-9. 向下滚动到 **“ConnectToDatabase”** 方法。
+9. 向下滚动到 **ConnectToDatabase** 方法。
 10. 注释掉设置用于连接 MongoDB 的凭据的行，并取消注释指定用于连接 Cosmos DB 的凭据的语句。代码应如下所示：
 
     ```C#
@@ -569,14 +603,14 @@ lab:
 ## 练习 5：知识总结
 
 1. 返回 Azure 门户。
-2. 在左侧窗格中，单击 **“资源组”**。
+2. 在侧边栏菜单中，单击 **“资源组”**。
 3. 在 **“资源组”** 窗口中，单击 **“mongodbrg”**。
 4. 单击 **“删除资源组”**。
 5. 在 **“确定要删除“mongodbrg”吗”** 页面的 **“输入资源组名称”** 框中，输入 **“mongodbrg”**，然后单击 **“删除”**。
 
 ---
-© 2019 Microsoft Corporation。保留所有权利。
+© 2020 Microsoft Corporation。保留所有权利。
 
-本文档中的文本在[知识共享署名 3.0 许可](https://creativecommons.org/licenses/by/3.0/legalcode)下提供，并且可能受到附加条款约束。本文档中包含的所有其他内容（包括但不限于商标、徽标、图片等）**均不** 包含在知识共享许可授权范围内。本文档不提供针对任何 Microsoft 产品中任何知识产权的任何合法权利。你可以出于内部参考目的复制和使用本文档。
+本文档中的文本在[知识共享署名 3.0 许可](https://creativecommons.org/licenses/by/3.0/legalcode)下提供，并且可能受到附加条款约束。本文档中包含的所有其他内容（包括但不限于商标、徽标、图片等）均**不**包含在知识共享许可授权范围内。本文档不提供针对任何 Microsoft 产品中任何知识产权的任何合法权利。你可以出于内部参考目的复制和使用本文档。
 
-本文档按“原样”提供。本文档中表达的信息和观点（包括 URL 和其他 Internet 网站参考）如有更改，恕不另行通知。你需要自行承担使用风险。有些示例仅用于说明，而且是虚构的。不能将其视为有意关联或推断。Microsoft 对此处提供的信息不做任何明示或暗示的保证。
+本文档“按原样”提供。本文档中表达的信息和观点（包括 URL 和其他 Internet 网站参考）如有更改，恕不另行通知。你需要自行承担使用风险。有些示例仅用于说明，而且是虚构的。不能将其视为有意关联或推断。Microsoft 对此处提供的信息不做任何明示或暗示的保证。
