@@ -239,19 +239,19 @@
     ```bash
     sudo yum install git
     
-    git clone https://github.com/MicrosoftLearning/DP-160T00A-Migrating-your-Database-to-Cosmos-DB migration-workshop-apps
+    git clone https://github.com/MicrosoftLearning/DP-060ZH-Migrating-your-Database-to-Cosmos-DB
     ```
 
 2. 移至 **“migration-workshop-apps/MongoDeviceDataCapture/MongoDeviceCapture”** 文件夹：
 
     ```bash
-    cd ~/migration-workshop-apps/MongoDeviceDataCapture/MongoDeviceDataCapture
+    cd DP-060ZH-Migrating-your-Database-to-Cosmos-DB/MongoDeviceDataCapture/MongoDeviceDataCapture
     ```
 
 3. 使用 **“代码”** 编辑器来检查 **“TemperatureDevice.cs”** 文件：
 
     ```bash
-    code TemperatureDevice.cs
+    nano TemperatureDevice.cs
     ```
 
     此文件中的代码包含一个名为 **“TemperatureDevice”** 的类，它模拟温度设备捕获数据并将数据保存在 MongoDB 数据库中。该类使用适用于 .NET Framework 的 MongoDB 库。 **“TemperatureDevice”** 构造函数使用存储在应用程序配置文件中的设置连接到数据库。 **“RecordTemperatures”** 方法生成读数并将其写入数据库。
@@ -259,7 +259,7 @@
 4. 关闭代码编辑器，然后打开 **“ThermometerReading.cs”** 文件：
 
    ```bash
-   code ThermometerReading.cs
+   nano ThermometerReading.cs
    ```
 
     此文件显示了应用程序存储在数据库中的文档的结构。每个文档都包含以下字段：
@@ -272,7 +272,7 @@
 5. 关闭代码编辑器，然后打开 **“App.config”** 文件：
 
     ```bash
-    code App.config
+    nano App.config
     ```
 
     此文件包含用于连接到 MongoDB 数据库的设置。请将 **“地址”** 键的值设置为先前记录的 MongoDB 服务器的 IP 地址，然后保存文件并关闭编辑器。
