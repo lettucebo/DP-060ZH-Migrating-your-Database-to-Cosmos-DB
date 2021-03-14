@@ -237,6 +237,8 @@
 1. 在 Azure Cloud Shell 中，运行以下命令以下载此研讨会的示例代码：
 
     ```bash
+    sudo yum install git
+    
     git clone https://github.com/MicrosoftLearning/DP-160T00A-Migrating-your-Database-to-Cosmos-DB migration-workshop-apps
     ```
 
