@@ -234,11 +234,18 @@
 
 ### 任务 1：生成并运行应用以填充 MongoDB 数据库
 
-1. 在 Azure Cloud Shell 中，运行以下命令以下载此研讨会的示例代码：
+0. 在 Azure Cloud Shell 中，运行以下命令以安装环境：
 
     ```bash
     sudo yum install git
     
+    sudo rpm -Uvh https://packages.microsoft.com/config/centos/7/packages-microsoft-prod.rpm
+    sudo yum install dotnet-sdk-2.1
+    ```
+
+1. 在 Azure Cloud Shell 中，运行以下命令以下载此研讨会的示例代码：
+
+    ```bash
     git clone https://github.com/MicrosoftLearning/DP-060ZH-Migrating-your-Database-to-Cosmos-DB
     ```
 
