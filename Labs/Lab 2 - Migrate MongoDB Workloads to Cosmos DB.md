@@ -67,9 +67,9 @@
 ### 任务 2：创建一个 MongoDB 数据库服务器
 
 1. 在 Azure 门户的侧边栏菜单中，单击 **“+ 创建资源”**。
-2. 在 **“搜索市场”** 框中，键入 **“MongoDB Community”**，然后按 Enter。
-3. 在 **“市场”** 页面上，单击 **“Ubuntu 中的 MongoDB 社区”**。
-4. 在 **“Ubuntu 中的 MongoDB 社区”** 页面上，单击 **“创建”**。
+2. 在 **“搜索市场”** 框中，键入 **“MongoDB 4.4 for LINUX CentOS 7.8”**，然后按 Enter。
+3. 在 **“市场”** 页面上，单击 **“MongoDB 4.4 for LINUX CentOS 7.8 (Tidal Media Inc)”**。
+4. 在 **“MongoDB 4.4 for LINUX CentOS 7.8”** 页面上，单击 **“创建”**。
 5. 在 **“创建虚拟机”** 页面上，输入以下详细信息，然后单击 **“下一步：磁盘 \>”**。
 
     | 属性  | 值  |
