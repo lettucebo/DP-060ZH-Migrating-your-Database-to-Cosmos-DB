@@ -246,7 +246,7 @@
 1. 在 Azure Cloud Shell 中，运行以下命令以下载此研讨会的示例代码：
 
     ```bash
-    git clone https://github.com/MicrosoftLearning/DP-060ZH-Migrating-your-Database-to-Cosmos-DB
+    git clone https://github.com/MicrosoftLearning/DP-060ZH-Migrating-your-Database-to-Cosmos-DB migration-workshop-apps
     ```
 
 2. 移至 **“migration-workshop-apps/MongoDeviceDataCapture/MongoDeviceCapture”** 文件夹：
