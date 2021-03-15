@@ -88,8 +88,8 @@ lab:
     | 大小 | 标准 D2 v2 |
     | 身份验证类型 | 密码 |
     | Username | azureuser |
-    | 密码 | Pa55w.rdPa55w.rd |
-    | 确认密码 | Pa55w.rdPa55w.rd |
+    | 密码 | Pa55w.rd |
+    | 确认密码 | Pa55w.rd |
 
 5. 在 **“磁盘”** 页面上，接受默认设置，然后单击 **“下一步：网络 \>”**。
 6. 在 **“网络”** 页面上，输入以下详细信息，然后单击 **“下一步：管理 \>”**。
@@ -138,7 +138,7 @@ lab:
 7. 在 Cloud Shell 中，如果尚未执行实验 2，请运行以下命令以下载此研讨会的示例代码和数据：
 
     ```bash
-    git clone https://github.com/MicrosoftLearning/DP-160T00A-Migrating-your-Database-to-Cosmos-DB migration-workshop-apps
+    git clone https://github.com/MicrosoftLearning/DP-060ZH-Migrating-your-Database-to-Cosmos-DB migration-workshop-apps
     ```
 
 8. 移至 **“migration-workshop-apps/Cassandra”** 文件夹：
