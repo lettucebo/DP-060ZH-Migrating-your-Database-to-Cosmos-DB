@@ -258,7 +258,7 @@ lab:
     | 密钥空间名称 | 单击 **“新建”**，然后键入 **“customerinfo”** |
     | 预配密钥空间吞吐量 | 取消选中 |
     | 输入 tableId | customerdetails |
-    | *“CREATE TABLE”* 框 | （customerid int、firstname text、lastname text、email text、stateprovince text、PRIMARY KEY ((stateprovince)、customerid)） |
+    | *“CREATE TABLE”* 框 | (customerid int, firstname text, lastname text, email text, stateprovince text, PRIMARY KEY ((stateprovince), customerid)) |
     | 吞吐量 | 10000 |
 
 12. 在 **“数据资源管理器”** 窗格中，单击 **“新建表”**。
@@ -269,7 +269,7 @@ lab:
     | 密钥空间名称 | 请单击 **“新建”**，然后键入 **“orderinfo”** |
     | 预配密钥空间吞吐量 | 取消选中 |
     | 输入 tableId | orderdetails |
-    | *“CREATE TABLE”* 框 | （orderid int、customerid int、orderdate date、ordervalue decimal、PRIMARY KEY ((customerid)、orderdate, orderid)） |
+    | *“CREATE TABLE”* 框 | (orderid int, customerid int, orderdate date, ordervalue decimal, PRIMARY KEY ((customerid), orderdate, orderid)) |
     | 吞吐量 | 10000 |
 
 14. 在 **“数据资源管理器”** 窗格中，单击 **“新建表”**。
@@ -279,7 +279,7 @@ lab:
     |---|---|
     | 密钥空间名称 | 请单击 **“使用现有项”**，然后选择 **“orderinfo”** |
     | 输入 tableId | orderline |
-    | *“CREATE TABLE”* 框 | （orderid int、orderline int、productname text、quantity smallint、orderlinecost decimal、PRIMARY KEY ((orderid)、productname、orderline)） |
+    | *“CREATE TABLE”* 框 | (orderid int, orderline int, productname text, quantity smallint, orderlinecost decimal, PRIMARY KEY ((orderid), productname, orderline)) |
     | 吞吐量 | 10000 |
 
 ### 任务 2：从 Cassandra 数据库导出数据
